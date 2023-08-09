@@ -1,0 +1,1 @@
+palabras = ["perro", "pescado", "avion", "gato", "verde", "arbol", "abeja", "celular", "computadora"]
