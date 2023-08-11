@@ -5,7 +5,7 @@
 import random
 class Busqueda_binaria():
 
-    __listado = set()
+    __listado = []
     __valor_minimo = 0
     __valor_maximo = 0
     __rango_inferior = None
@@ -15,44 +15,50 @@ class Busqueda_binaria():
     def __init__(self):
 
         #Se inicializa la lista de números
-        self.__listado = self.__crear_lista()
+        self.__listado = list(self.__crear_lista())
 
         tamaño_lista_generada = len(self.__listado)
 
         #Valor maximo de la lista generada
-        self.__valor_maximo = list(self.__listado)[tamaño_lista_generada]
+        self.__valor_maximo = list(self.__listado)[tamaño_lista_generada - 1 ]
 
         # Se selecciona el valor a adivinar
         self.__valor_buscado = list(self.__listado)[random.randint(0, tamaño_lista_generada)]
 
-        print(self.__valor_buscado)
+
         print("+========= Adivina el número ==========+")
         print("+======================================+")
         print("Comenzemos")
 
     def jugar(self):
 
-        self.__valor_usuario = self.__valor_usuario_valido()
 
-        self.__busqueda__binaria()
+        while not self.__busqueda__binaria():
+            print("Intenta otra vez")
 
 
     def __busqueda__binaria(self):
         #30
-        self.__punto_medio = (self.__rango_inferior + self.__rango_superior) // 2
+        self.__valor_usuario = self.__valor_usuario_valido()
 
-        valor_punto_medio = list(self.__listado)[self.__punto_medio]
+        indice_seleccionado = self.__listado.index(self.__valor_usuario)
 
         if self.__valor_usuario == self.__valor_buscado:
             print(f"Adivinaste el valor es: {self.__valor_buscado}")
-            return 1
+            return True
 
-        if self.__valor_buscado < self.__valor_usuario:
+        if self.__valor_usuario < self.__valor_buscado:
+            self.__rango_inferior = indice_seleccionado + 1
+            self.__valor_minimo = self.__listado[self.__rango_inferior]
 
+        if self.__valor_usuario > self.__valor_buscado:
+            self.__rango_superior = indice_seleccionado - 1
+            self.__valor_maximo = self.__listado[self.__rango_superior]
 
+        print(f"Valor mínimo: {self.__valor_minimo} - Valor máximo: {self.__valor_maximo}")
+        #print(f"Valor buscado: {self.__valor_buscado} - Valor usuario: {self.__valor_usuario}")
 
-
-
+        return False
 
     def __crear_lista(self):
         lista_generada = set()
